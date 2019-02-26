@@ -1,0 +1,11 @@
+#!/bin/bash
+
+script=.kube_inventory.sh
+echo "#!/bin/bash" > $script
+echo "python -m kube_inventory" >> $script
+function finish() {
+  rm $script
+}
+trap finish EXIT
+chmod +x $script
+ansible-playbook -i "$script" $@
